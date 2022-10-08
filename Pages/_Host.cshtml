@@ -15,17 +15,17 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link href="css/site.css" rel="stylesheet" />
     <link href="MCake_Manage.styles.css" rel="stylesheet" />
-     <!-- General CSS Files -->
-    <link rel="stylesheet" href="~/assets/css/app.min.css"/>
+    <!-- General CSS Files -->
+    <link rel="stylesheet" href="~/assets/css/app.min.css" />
     <!-- Template CSS -->
-    <link rel="stylesheet" href="~/assets/fonts/fontawesome-all.min.css"/>
-    <link rel="stylesheet" href="~/assets/fonts/font-awesome.min.css"/>
-    <link rel="stylesheet" href="~/assets/css/style.css"/>
-    <link rel="stylesheet" href="~/assets/css/components.css"/>
+    <link rel="stylesheet" href="~/assets/fonts/fontawesome-all.min.css" />
+    <link rel="stylesheet" href="~/assets/fonts/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/assets/css/style.css" />
+    <link rel="stylesheet" href="~/assets/css/components.css" />
     <!-- Custom style CSS -->
-    <link rel="stylesheet" href="~/assets/css/custom.css"/>
-     <link rel="stylesheet" href="~/assets/bundles/datatables/datatables.min.css"/>
-    <link rel="stylesheet" href="~/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" href="~/assets/css/custom.css" />
+    <link rel="stylesheet" href="~/assets/bundles/datatables/datatables.min.css" />
+    <link rel="stylesheet" href="~/assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css" />
 </head>
 <body>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
@@ -42,17 +42,28 @@
     </div>
 
     <script src="_framework/blazor.server.js"></script>
-    <script  src="~/assets/js/app.min.js" autostart="true"></script>
-  <!-- JS Libraies -->
-  <script  src="~/assets/bundles/jquery-ui/jquery-ui.min.js" autostart="true"></script>
-  <!-- Page Specific JS File -->
-  <script  src="~/assets/js/page/advance-table.js" autostart="true"></script>
-  <!-- Template JS File -->
-  <script  src="~/assets/js/scripts.js"></script>
-  <!-- Custom JS File -->
-  <script  src="~/assets/js/custom.js" autostart="true"></script>
-  <script  src="~/assets/bundles/apexcharts/apexcharts.min.js" autostart="true"></script>
-  <!-- Page Specific JS File -->
-  <script  src="~/assets/js/page/chart-apexcharts.js"></script>
+    <script>
+      if (window.location.hostname.includes("localhost")) {
+        Blazor.start({
+          environment: "Staging"
+        });
+      } else {
+        Blazor.start({
+          environment: "Production"
+        });
+      }
+</script>
+    <script src="~/assets/js/app.min.js" autostart="true"></script>
+    <!-- JS Libraies -->
+    <script src="~/assets/bundles/jquery-ui/jquery-ui.min.js" autostart="true"></script>
+    <!-- Page Specific JS File -->
+    <script src="~/assets/js/page/advance-table.js" autostart="true"></script>
+    <!-- Template JS File -->
+    <script src="~/assets/js/scripts.js"></script>
+    <!-- Custom JS File -->
+    <script src="~/assets/js/custom.js" autostart="true"></script>
+    <script src="~/assets/bundles/apexcharts/apexcharts.min.js" autostart="true"></script>
+    <!-- Page Specific JS File -->
+    <script src="~/assets/js/page/chart-apexcharts.js"></script>
 </body>
 </html>
