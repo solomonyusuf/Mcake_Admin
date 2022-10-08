@@ -1,0 +1,83 @@
+﻿
+
+<style>
+    .active{
+        background-color:cyan;
+        
+       
+    }
+</style>
+<div class="main-sidebar sidebar-style-2">
+                <aside id="sidebar-wrapper">
+                    <div class="sidebar-brand">
+                        <a href=""> <img alt="image" src="assets/img/logo.png" class="header-logo" /> <span className="logo-name">MCake</span>
+                        </a>
+                    </div>
+                   
+                    <ul class="sidebar-menu">
+                         <AuthorizeView Roles="Admin,Manager">
+                             <NotAuthorized>
+                                 <li><NavLink>Restricted Content</NavLink></li>
+                             </NotAuthorized>
+                             <Authorized>
+                        <li class="menu-header">Main</li>
+                        <li>
+                            <NavLink href="/" Match="NavLinkMatch.All"  ActiveClass="active" class="nav-link"><i class="fa fa-university" /><span>Dashboard</span></NavLink>
+                        </li>
+                        <li>
+                            <NavLink href="/admin/category" ActiveClass="active" ><i class="fa fa-list-alt"  /><span>Category</span></NavLink>
+              
+                        </li>
+                        <li>
+                            <NavLink ActiveClass="active" class="nav-link" href="/admin/product"><i class="fa  fa-braille" /><span>Products</span></NavLink>       
+                        </li>
+                        <li>
+                          <NavLink ActiveClass="active" class="nav-link" href="/admin/messages"><i class="fa fa-briefcase" /><span>Blog</span></NavLink>
+                            
+                        </li>
+                         <li>
+                          <NavLink ActiveClass="active" class="nav-link" href="/admin/inbox"><i class="fa fa-envelope-o" /><span>Messages</span></NavLink>
+                            
+                        </li>
+                        <li class="menu-header">Shop Elements</li>
+                        <li>
+                            <NavLink ActiveClass="active" class="nav-link" href="/admin/confirm/orders"><i class="fa fa-shopping-cart" /><span>Orders
+                            </span></NavLink>
+                          
+                        </li>
+                        <li>
+                           <NavLink ActiveClass="active" class="nav-link" href="/admin/payments"><i class="fa fa-credit-card" /><span>Payments</span></NavLink>
+                            
+                        </li>
+                        </Authorized>
+                        </AuthorizeView>
+                       
+                         <AuthorizeView Roles="Admin">
+                             <NotAuthorized>
+                                 <li><NavLink>Restricted Content</NavLink></li>
+                             </NotAuthorized>
+                           <Authorized>
+                          <li class="menu-header">Users Elements</li>
+                        <li>
+                           <NavLink ActiveClass="active" class="nav-link" href="/all/users"><i class="fa fa-user-o" /><span>Users
+                            </span></NavLink>
+                           
+                        </li>
+                        <li>
+                           <NavLink ActiveClass="active" class="nav-link" href="/all/activities"><i class="fa fa-users" /><span>Activities
+                            </span></NavLink>
+                           
+                        </li>
+                    
+
+                           </Authorized>
+                       </AuthorizeView>
+                        
+                    </ul>
+                    
+                </aside>
+            </div >
+
+@code {
+
+}

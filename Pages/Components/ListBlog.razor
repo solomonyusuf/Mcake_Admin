@@ -1,0 +1,132 @@
+﻿@page "/admin/messages"
+@inject BlogsController service
+@inject IJSRuntime js
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h4>Database Posts</h4>&nbsp;<a class="btn btn-outline-primary" href="/add/blog">Add Post</a>&nbsp;
+            <strong align="right"><i>&nbsp;-&nbsp;@list.Count()&nbsp;Posts</i></strong>
+        </div>
+        <div class="card-header-form">
+            <EditForm Model="@search" OnSubmit="Get">
+                <div class="input-group col-md-8 col-sm-8">
+                    <InputText type="text" @bind-Value="@search.input" class="form-control" placeholder="Search by date" />
+                    <div class="input-group-btn">
+                        <button class="form-control btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="input-group-btn">
+                        <button class="form-control btn btn-warning" @onclick="refresh"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Message</th>
+                            <th>Date</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (@list != null)
+                        {
+
+                            @foreach (var item in list)
+                            {
+
+                                        <tr>
+                                            <td><a href="@item.ImagePath"><img src="@item.ImagePath" style="height:50px;width:50px;border-radius:425px;" /></a>&nbsp;<aside><strong>@item.Title</strong></aside></td>
+                                            <td><i>@item.Body</i></td>
+                                            <td><i>@(@item.Time)</i></td>
+                                            <td><a class="btn btn-primary" href="/edit/blog/@item.Id"><i class="fa fa-edit"></i></a></td>
+                                            <td><button class="btn btn-danger" @onclick="@(async ()=> await Delete(@item.Id))"><i class="fa fa-trash"></i></button></td>
+                                        </tr>
+
+                            }
+
+                        }
+                        @if (list.Count == 0)
+                        {
+
+                                <tr><td><i>No data available</i></td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Blog> list = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Get();
+
+    }
+    public Search search = new();
+    public class Search
+    {
+        public string input { get; set; }
+    }
+
+
+    public async Task refresh()
+    {
+        try
+        {
+            var res = await service.GetBlogs();
+            list = res.Value.OrderByDescending(s => s.Id).ToList();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+    public async Task Get()
+    {
+        try
+        {
+            var res = await service.GetBlogs();
+            if (search.input == null)
+            {
+                list = res.Value.OrderByDescending(s => s.Id).ToList();
+            }
+            else
+            {
+                list = res.Value.Where(s => s.Title.ToLowerInvariant().Contains(search.input.ToLowerInvariant()) || s.Time.ToShortDateString().ToLowerInvariant().Contains(search.input.ToLowerInvariant())).ToList();
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public async Task Delete(int id)
+    {
+
+        try
+        {
+            await service.DeleteBlog(id);
+            await Get();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+
+
+}

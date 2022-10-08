@@ -1,0 +1,105 @@
+﻿@page "/all/activities"
+@inject ActivitiesController service
+
+
+  <section class="section">
+      <h4>Database Activities</h4>
+<div class="section-body">
+    <h2 class="section-title">@DateTime.Now.ToLongDateString().</h2>
+    <div class="row">
+        <div class="col-12">
+            <div class="activities">
+                @if (@list != null)
+                {
+
+            @foreach (var item in list)
+            {
+                <div class="activity">
+                    <div class="activity-icon bg-primary text-white">
+                        <i class="fas fa-arrows-alt"></i>
+                    </div>                                                                        
+                <div class="activity-detail">
+                        <div class="mb-2">
+                            <span class="text-job text-primary"></span>
+                            <span class="bullet">@item.UserId</span>
+                            <b class="text-job">@item.DateTime.ToLongDateString()</b>
+                            <br/>
+                            <div class="float-right">
+                              @item.Action       
+                            </div>
+                        </div>
+                    </div>
+                          
+                    </div>  
+                      }
+
+                        }
+                        @if (list.Count() == 0)
+                        {
+
+                            <p><i>No data available</i></p>
+                        }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@code {
+    public List<Activity> list = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Get();
+
+    }
+   
+
+    public async Task refresh()
+    {
+        try
+        {
+            var res = await service.GetActivities();
+            list = res.Value.Where(s => DateTime.Now.ToLongDateString().Contains(s.DateTime.ToLongDateString())).OrderByDescending(s => s.ActivityId).ToList();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+    public async Task Get()
+    {
+        try
+        {
+            var res = await service.GetActivities();
+            
+                list = res.Value.Where(s => DateTime.Now.ToLongDateString().Contains(s.DateTime.ToLongDateString())).OrderByDescending(s => s.ActivityId).ToList();
+ 
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public async Task Delete(int id)
+    {
+
+        try
+        {
+            await service.DeleteActivity(id);
+            await Get();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+   
+
+}

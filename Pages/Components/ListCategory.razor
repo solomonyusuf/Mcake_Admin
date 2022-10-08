@@ -1,0 +1,130 @@
+﻿@page "/admin/category"
+@inject CategoriesController service
+@inject IJSRuntime js
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h4>Database Categories</h4>&nbsp;<a class="btn btn-outline-primary" href="/add/category">Add Category</a>&nbsp;
+            <strong align="right"><i>&nbsp;-&nbsp;@list.Count()&nbsp;Categories</i></strong>
+        </div>
+        <div class="card-header-form">
+            <EditForm Model="@search" OnSubmit="Get">
+                <div class="input-group col-md-8 col-sm-8">
+                    <InputText  type="text" @bind-Value="@search.input" class="form-control" placeholder="Search for items"/>
+                    <div class="input-group-btn">
+                        <button class="form-control btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                     <div class="input-group-btn">
+                        <button  class="form-control btn btn-warning" @onclick="refresh"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover"  style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Names</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (@list != null)
+                        {
+
+                            @foreach (var item in list)
+                            {
+
+                                <tr>
+                                    <td><a href="@item.ImagePath"><img src="@item.ImagePath" style="height:50px;width:50px;border-radius:425px;" /></a>&nbsp;<strong>@item.CategoryName</strong> &nbsp;&nbsp;-&nbsp;@item.Products.Count()&nbsp;products</td>
+                                    <td><a class="btn btn-info" href="/add/product/@item.CategoryId">Add Product</a></td>
+                                    <td><a class="btn btn-primary" href="/edit/category/@item.CategoryId"><i class="fa fa-edit"></i></a></td>
+                                    <td><button class="btn btn-danger" @onclick="@(async ()=> await Delete(@item.CategoryId))"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+
+                            }
+
+                        }
+                         @if(list.Count() == 0)
+                        {
+
+                            <tr><td><i>No data available</i></td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<Category> list = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Get();
+
+    }
+    public Search search = new();
+    public class Search
+    {
+        public string input{ get; set; }
+    }
+
+
+    public async Task refresh()
+    {
+        try
+        {  
+            var res = await service.GetCategories();
+            list = res.Value.OrderBy(s => s.CategoryName).ToList();       
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+    public async Task Get()
+    {
+        try
+        {  
+            var res = await service.GetCategories();
+            if(search.input == null)
+            {
+                list = res.Value.OrderBy(s => s.CategoryName).ToList();
+            }
+            else
+            {
+                list = res.Value.Where(s => s.CategoryName.ToLowerInvariant().Contains(search.input.ToLowerInvariant())).ToList();
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public async Task Delete(Guid id)
+    {
+
+        try
+        {
+            await service.DeleteCategory(id);
+            await Get();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    
+     
+}

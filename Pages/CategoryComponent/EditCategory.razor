@@ -1,0 +1,73 @@
+﻿@page "/edit/category/{id}"
+@inject CategoriesController service
+@inject NavigationManager router
+
+
+
+<div class="col-12 col-md-6 col-lg-6">
+    <EditForm Model="@category" class="card" OnSubmit="Add">
+        <div class="card-header">
+            <h4>Edit Category</h4>
+        </div>
+        <div class="card-body">
+            @if (@Path != null)
+            {
+                <div class="form-group">
+                    <img src="@Path" style="height:300px;width:300px;" type="text" class="form-control" />
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <img src="@category.ImagePath" style="height:300px;width:300px;" type="text" class="form-control" />
+                 </div>               
+            }
+            <div class="form-group">
+                <InputFile OnChange="Upload" type="file" class="form-control" />
+            </div>
+            <div class="form-group">
+                <InputText @bind-Value="@category.CategoryName" placeholder="Enter Category Name" type="text" class="form-control" />
+            </div>
+            <div class="form-group"align="center">
+                <button type="submit" class="btn btn-primary w-50">Submit</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+    public Category category = new();
+    public string? Path;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var res = await service.GetCategory(Guid.Parse(id));
+        this.category = res;
+    }
+
+
+    public async Task Add()
+    {
+        await service.PutCategory(Guid.Parse(id), category);
+        router.NavigateTo("/admin/category");
+    }
+
+    public async Task Upload(InputFileChangeEventArgs args)
+    {
+        var file = args.File;
+        var stream = file.OpenReadStream(20000000);
+        var path = $"wwwroot\\StaticFiles\\{file.Name}";
+        category.ImagePath = path;
+        var fs = File.Create(path);
+        await stream.CopyToAsync(fs);
+        stream.Close(); fs.Close();
+        Path = $"/wwwroot/StaticFiles/{file.Name}";
+
+
+    }
+
+
+}

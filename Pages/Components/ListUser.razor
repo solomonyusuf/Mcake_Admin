@@ -1,0 +1,139 @@
+﻿@page "/all/users"
+@inject ApplicationUserController service
+@inject RolesController role
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-header">
+            <h4>Database Users</h4>
+            <strong align="right"><i>&nbsp;-&nbsp;@list.Count()&nbsp;Users</i></strong>
+        </div>
+        <div class="card-header-form">
+            <EditForm Model="@search" OnSubmit="Get">
+                <div class="input-group col-md-8 col-sm-8">
+                    <InputText  type="text" @bind-Value="@search.input" class="form-control" placeholder="Search by ID or username"/>
+                    <div class="input-group-btn">
+                        <button class="form-control btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                    </div>
+                     <div class="input-group-btn">
+                        <button  class="form-control btn btn-warning" @onclick="refresh"><i class="fa fa-refresh"></i></button>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover"  style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>User ID</th>
+                            <th>Phone No.</th>
+                            <th>Roles</th>
+                            <th></th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (@list != null)
+                        {
+
+                            @foreach (var item in list)
+                            {
+
+                                <tr>
+                                   <td><strong>@item.UserName</strong></td>
+                                   <td><strong><i>@item.Id</i></strong></td>
+                                    <td><i>@item.PhoneNumber</i></td>
+                                    <td>
+                                      </td>
+                                    <td><button class="btn btn-danger" @onclick="@(async ()=> await Delete(@item.Id))"><i class="fa fa-trash"></i></button></td>
+                                </tr>
+
+                            }
+
+                        }
+                        @if(list.Count == 0)
+                        {
+
+                            <tr><td><i>No data available</i></td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    public List<ApplicationUser> list = new();
+    
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Get();
+
+    }
+    public Search search = new();
+    public class Search
+    {
+        public string input{ get; set; }
+    }
+
+
+
+
+    public async Task refresh()
+    {
+        try
+        {  
+            var res = await service.GetUser();
+            list = res.OrderByDescending(s => s.Id).ToList();       
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+    public async Task Get()
+    {
+        try
+        {  
+            var res = await service.GetUser();
+          
+            if(search.input == null)
+            {
+                list =  res.OrderByDescending(s => s.Id).ToList();
+               
+                
+            }
+            else
+            {
+                list = res.Where(s => s.Id.ToLowerInvariant().Contains(search.input.ToLowerInvariant()) || s.UserName.ToLowerInvariant().Contains(search.input.ToLowerInvariant())).ToList();
+            }
+           
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public async Task Delete(string id)
+    {
+
+        try
+        {
+            await service.DeleteApplicationUser(id);
+            await Get();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+     
+}

@@ -1,0 +1,110 @@
+﻿@page "/add/product/{id}"
+@inject ProductsController service
+@inject ImagesController _img
+@inject NavigationManager router
+
+
+
+<div class="col-12 col-md-6 col-lg-6">
+    <EditForm Model="@model" class="card" OnSubmit="Add">
+        <div class="card-header">
+            <h4>Add Product</h4>
+        </div>
+        <div class="card-body">
+            @if (@Path != null)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Image Check</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label class="form-label">Images: Ensure you upload only 3 files</label>
+                            <div class="row gutters-sm">
+
+                                @foreach (var item in Path)
+                                {
+                                    <div class="col-6 col-sm-4">
+                                        <label class="imagecheck mb-4">
+                                            <input name="imagecheck" type="checkbox" value="2" class="imagecheck-input" checked />
+                                            <span class="imagecheck-figure">
+                                                <img src="@item" alt="}" class="imagecheck-image">
+                                            </span>
+                                        </label>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <InputFile OnChange="@Upload" type="file" multiple="3" class="form-control" />
+            </div>
+            <div class="form-group">
+                <InputText @bind-Value="@model.ProductName" placeholder="Enter Product Name" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <InputText @bind-Value="@model.Price" placeholder="Enter Price" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <InputText @bind-Value="@model.ShippingPrice" placeholder="Enter Shipping Price" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <InputText @bind-Value="@model.Tag" placeholder="Enter Tag" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <InputTextArea @bind-Value="@model.Description" placeholder="Enter Description" type="text" class="form-control" />
+            </div>
+            <div class="form-group" align="center">
+                <button type="submit" class="btn btn-primary w-50">Submit</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+
+@code {
+    [Parameter]
+    public string id { get; set; }
+    public Product model = new();
+    public Image img = new();
+    public List<string> Path = new();
+
+    public async Task Add()
+    {
+        this.model.Image_1 = Path.First();
+        this.model.Image_2 = Path.Last();
+        this.model.CategoryId = Guid.Parse(id);
+        var res = await service.PostProduct(model);
+        await Task.Run(() => Post(res.ProductId));
+        router.NavigateTo("/admin/product");
+    }
+
+    public async Task Post(Guid Pid)
+    {
+        foreach (var item in Path)
+        {
+            var data = new Image { ProductId = Pid, ImagePath = item };
+            await _img.PostImage(data);
+        }
+    }
+
+    public async Task Upload(InputFileChangeEventArgs args)
+    {
+        foreach (var item in args.GetMultipleFiles())
+        {
+            var stream = item.OpenReadStream(20000000);
+            var path = $"wwwroot\\StaticFiles\\{item.Name}";
+            var fs = File.Create(path);
+            await stream.CopyToAsync(fs);
+            stream.Close(); fs.Close();
+            var load = $"/wwwroot/StaticFiles/{item.Name}";
+            Path.Add(load);
+        }
+
+    }
+
+
+}

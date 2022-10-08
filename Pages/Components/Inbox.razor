@@ -1,0 +1,140 @@
+﻿@page "/admin/inbox"
+@inject ContactsController service
+
+
+
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="card">
+                  <div class="boxs mail_listing">
+                    <div class="inbox-center table-responsive">
+                      <table class="table table-hover">
+                        <thead>
+                          <tr>
+                            <th colspan="3">
+                              <div class="inbox-header">
+                                <div class="mail-option">
+                                  <div class="email-btn-group m-l-30">
+                                    <a href="/" class="col-dark-gray waves-effect m-r-20" title="back"
+                                      data-toggle="tooltip">
+                                      <i class="material-icons">keyboard_return</i>
+                                    </a>             
+                                    <button @onclick="@Remove" class="btn btn-danger"><i class="fa fa-trash"></i></button>&nbsp;
+                                    <h5>Database Inbox</h5>
+                                </div>
+                                </div>
+                              </div>
+                            </th>
+                           <th></th>
+                           <th></th>
+                           <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                         @if (list != null)
+                        {
+                           @foreach (var item in list)
+                           {
+                                <tr class="unread">
+                                <td class="tbl-checkbox">
+                                    <label class="form-check-label">
+                                        <input @onclick="@(()=> AddTo(@item.Id))" type="checkbox">
+                                        <span class="form-check-sign"></span>
+                                    </label>
+                                </td>
+                                <td> <span class="badge badge-primary">@item.Email</span></td>
+                                <td class="hidden-xs">@item.FullName</td>
+                                <td class="max-texts">
+                                    <p>
+                                       @item.Message.&nbsp;@item.PhoneNo    
+                                    </p>
+                                </td>
+                                <td class="hidden-xs">
+                                    <button @onclick="@(()=> Delete(@item.Id))" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                                </td>
+                                <td class="text-right"><i><b>@item.DateTime</b></i> </td>
+                            </tr>
+                           }
+                        }
+                         @if(@list.Count() == 0)
+                        {
+
+                            <tr><td><i>No data available</i></td></tr>
+                        }
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+@code{
+    public List<Contact> list = new();
+    public List<int> delete = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await refresh();
+
+    }
+
+
+    public async Task refresh()
+    {
+        try
+        {  
+            var res = await service.GetContacts();
+            list = res.Value.OrderByDescending(s => s.Id).ToList();       
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    public async Task Delete(int id)
+    {
+
+        try
+        {
+            await service.DeleteContact(id);
+            await refresh();
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+    void AddTo(int id)
+    {
+        delete.Add(id); 
+
+    }
+
+    public async Task Remove()
+    {
+
+        try
+        {
+            foreach (var item in delete)
+            {
+               await Delete(item);
+            }
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+    }
+
+
+
+ }   
+
+
+

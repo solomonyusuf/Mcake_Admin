@@ -1,0 +1,58 @@
+﻿@page "/"
+@namespace MCake_Manage.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MCake_Manage</title>
+    <base href="~/" />
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="MCake_Manage.styles.css" rel="stylesheet" />
+     <!-- General CSS Files -->
+    <link rel="stylesheet" href="assets/css/app.min.css"/>
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/components.css"/>
+    <!-- Custom style CSS -->
+    <link rel="stylesheet" href="assets/css/custom.css"/>
+     <link rel="stylesheet" href="assets/bundles/datatables/datatables.min.css">
+    <link rel="stylesheet" href="assets/bundles/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
+</head>
+<body>
+    <component type="typeof(App)" render-mode="ServerPrerendered" />
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            An error has occurred. This application may no longer respond until reloaded.
+        </environment>
+        <environment include="Development">
+            An unhandled exception has occurred. See browser dev tools for details.
+        </environment>
+        <a href="" class="reload">Reload</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script  src="~/assets/js/app.min.js" autostart="true"></script>
+  <!-- JS Libraies -->
+  <script  src="~/assets/bundles/jquery-ui/jquery-ui.min.js" autostart="true"></script>
+  <!-- Page Specific JS File -->
+  <script  src="~/assets/js/page/advance-table.js" autostart="true"></script>
+  <!-- Template JS File -->
+  <script  src="~/assets/js/scripts.js"></script>
+  <!-- Custom JS File -->
+  <script  src="~/assets/js/custom.js" autostart="true"></script>
+  <script  src="~/assets/bundles/apexcharts/apexcharts.min.js" autostart="true"></script>
+  <!-- Page Specific JS File -->
+  <script  src="~/assets/js/page/chart-apexcharts.js"></script>
+</body>
+</html>
