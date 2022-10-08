@@ -84,9 +84,8 @@ namespace MCake_Manage
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-           
+
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseStaticFiles(new StaticFileOptions()
