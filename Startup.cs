@@ -68,7 +68,8 @@ namespace MCake_Manage
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager,
+          RoleManager<Role> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -81,7 +82,7 @@ namespace MCake_Manage
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            SetupDb.SeedData(userManager, roleManager);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
