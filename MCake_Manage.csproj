@@ -12,6 +12,11 @@
     <Content Remove="Pages\BlogComponent\EditCategory.razor" />
   </ItemGroup>
 
+	<Target Name="PrePublishTarget" AfterTargets="Publish">
+  <Exec Command="dotnet ef database update" />
+</Target>
+	
+		
   <ItemGroup>
     <None Include="Pages\BlogComponent\AddBlog.razor" />
     <None Include="Pages\BlogComponent\EditBlog.razor" />

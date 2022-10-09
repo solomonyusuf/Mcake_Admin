@@ -47,7 +47,6 @@ namespace MCake_Manage
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.EnsureCreatedAsync();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddTransient<ProductsController>();
