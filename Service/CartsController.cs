@@ -11,8 +11,8 @@ using MCake_Manage.Models;
 
 namespace MCake_Manage.Service
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
+    [Route("api/[controller]")]
+    [ApiController]
     public class CartsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

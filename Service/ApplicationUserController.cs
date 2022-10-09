@@ -10,8 +10,8 @@ using MCake_Manage.Models;
 
 namespace MCake_Manage.service
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
+    [Route("api/Auth")]
+    [ApiController]
     public class ApplicationUserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

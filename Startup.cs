@@ -47,7 +47,7 @@ namespace MCake_Manage
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
+            // services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddTransient<ProductsController>();
@@ -83,7 +83,7 @@ namespace MCake_Manage
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            SetupDb.SeedData(userManager, roleManager);
+            //SetupDb.SeedData(userManager, roleManager);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
