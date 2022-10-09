@@ -47,6 +47,7 @@ namespace MCake_Manage
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
+            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddTransient<ProductsController>();
@@ -86,7 +87,7 @@ namespace MCake_Manage
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
-
+            app.UseHsts();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseStaticFiles(new StaticFileOptions()
