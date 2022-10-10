@@ -12,6 +12,7 @@ namespace MCake_Manage.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            Database.MigrateAsync();
         }
 
         public virtual DbSet<Product> Products { get; set; }

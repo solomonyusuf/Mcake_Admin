@@ -38,16 +38,17 @@ namespace MCake_Manage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                options.UseNpgsql(Configuration.GetConnectionString("PostConnection"))
+                );
             services.AddIdentity<IdentityUser, Role>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<Role>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
+            services.AddEntityFrameworkNpgsql();
             services.AddServerSideBlazor();
-            services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.EnsureCreatedAsync();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddTransient<ProductsController>();

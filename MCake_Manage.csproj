@@ -844,6 +844,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="Npgsql" Version="5.0.15" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
     <PackageReference Include="Syncfusion.Blazor" Version="20.3.0.48" />
   </ItemGroup>
 
@@ -851,6 +853,7 @@
     <None Include="wwwroot\*" />
 </ItemGroup>
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\StaticFiles\" />
   </ItemGroup>
 
