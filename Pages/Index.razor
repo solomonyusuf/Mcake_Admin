@@ -333,6 +333,8 @@
             </div>
         </div>
     </div>
+
+    
 </section>
 
 @code {
@@ -348,12 +350,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var u = await _user.GetUser(); 
+        var u = await _user.GetUser();
         users = u.ToList();
         var b = await _blog.GetBlogs();
         blogs = b.Value.ToList();
-        orders = _db.Orders.ToList(); 
-        var p = await _product.GetProducts(); 
+        orders = _db.Orders.ToList();
+        var p = await _product.GetProducts();
         products = p.ToList();
         var c = await _contact.GetContacts();
         inquires = c.Value.ToList();
@@ -362,7 +364,7 @@
         earning = orders.Where(o => o.PaymentConfirmed == true && o.DateTime.AddDays(7) < DateTime.Now).Select(s => int.Parse(s.TotalPrice)).ToList();
         newProducts = products.Where(o => DateTime.Now < o.DateTime.AddDays(2)).Select(s => int.Parse(s.Price)).ToList();
 
-       
+
     }
 
 }

@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Syncfusion.Blazor;
 
 namespace MCake_Manage
 {
@@ -73,6 +74,7 @@ namespace MCake_Manage
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager,
           RoleManager<Role> roleManager)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("@32302e312e30YmihKEdpJXspNePDbBbA6ddpaKLHGB/RS6Kv8a42H/k=");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
