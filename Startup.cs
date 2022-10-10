@@ -41,7 +41,7 @@ namespace MCake_Manage
                 //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
                 options.UseNpgsql(Configuration.GetConnectionString("PostConnection"))
                 );
-            services.AddIdentity<IdentityUser, Role>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddIdentity<IdentityUser, Role>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<Role>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders()
