@@ -74,7 +74,7 @@ namespace MCake_Manage
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<IdentityUser> userManager,
           RoleManager<Role> roleManager)
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("@32302e312e30YmihKEdpJXspNePDbBbA6ddpaKLHGB/RS6Kv8a42H/k=");
+            //Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("@32302e312e30YmihKEdpJXspNePDbBbA6ddpaKLHGB/RS6Kv8a42H/k=");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -95,7 +95,7 @@ namespace MCake_Manage
             app.UseAuthorization();
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
                 RequestPath = new PathString("/StaticFiles")
             });
             app.UseEndpoints(endpoints =>
