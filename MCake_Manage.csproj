@@ -23,6 +23,7 @@
 		<None Include="Pages\BlogComponent\OrderDetail.razor" />
 		<None Include="Pages\ProductsComponent\AddProduct.razor" />
 		<None Include="Pages\ProductsComponent\EditProduct.razor" />
+		
 	</ItemGroup>
 
 	<ItemGroup>
@@ -39,10 +40,10 @@
 
 	<ItemGroup>
 		<None Include="wwwroot\*" />
+		<None Include="wwwroot\StaticFiles\*" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Migrations\" />
-		<Folder Include="StaticFiles\Images\" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -63,10 +64,6 @@
 
 	<ItemGroup>
 		<_ContentIncludedByDefault Remove="Pages\Components\OrderDetail.razor" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Include="StaticFiles\Images\*" />
 	</ItemGroup>
 
 </Project>
