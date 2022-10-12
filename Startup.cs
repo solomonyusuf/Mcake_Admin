@@ -95,8 +95,8 @@ namespace MCake_Manage
             app.UseAuthorization();
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "StaticFiles")),
-                RequestPath = new PathString("/wwwroot/StaticFiles")
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+                RequestPath = new PathString("/StaticFiles")
             });
             app.UseEndpoints(endpoints =>
             {

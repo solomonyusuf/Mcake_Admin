@@ -45,12 +45,12 @@
     {
         var file = args.File;
         var stream = file.OpenReadStream(20000000);
-        var path = $"wwwroot\\StaticFiles\\{file.Name}";
+        var path = $"StaticFiles\\{file.Name}";
         category.ImagePath = path;
         var fs = File.Create(path);
         await stream.CopyToAsync(fs);
         stream.Close(); fs.Close();
-        Path = $"/wwwroot/StaticFiles/{file.Name}";
+        Path = $"StaticFiles/{file.Name}";
 
 
     }

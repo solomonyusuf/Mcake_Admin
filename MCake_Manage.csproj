@@ -64,4 +64,11 @@
     <_ContentIncludedByDefault Remove="Pages\Components\OrderDetail.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="StaticFiles\alexandra-gornago-_B7shfNUXEA-unsplash.jpg" />
+    <Content Include="StaticFiles\american-heritage-chocolate-vdx5hPQhXFk-unsplash.jpg" />
+    <Content Include="StaticFiles\annie-spratt-6SHd7Q-l1UQ-unsplash.jpg" />
+    <Content Include="StaticFiles\david-holifield-kPxsqUGneXQ-unsplash.jpg" />
+  </ItemGroup>
+
 </Project>
