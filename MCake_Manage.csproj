@@ -39,11 +39,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="wwwroot\*" />
+		<None Include="wwwroot\*" CopyToPublishDirectory="Always" />
 	</ItemGroup>
+
 	<ItemGroup>
 		<Folder Include="Migrations\" />
-		<Folder Include="wwwroot\StaticFiles\" />
+		<Folder Include="wwwroot\StaticFiles\" CopyToPublishDirectory="Always" />
 	</ItemGroup>
 
 	<ItemGroup>
