@@ -50,9 +50,9 @@
         var path = $"wwwroot\\StaticFiles\\{file.Name}";
         category.ImagePath = path;
         var fs = File.Create(path);
-        await stream.CopyToAsync(fs);
-        stream.Close(); 
         fs.Close();
+        await stream.CopyToAsync(fs);
+        stream.Close();    
         Path = path;
 
 
