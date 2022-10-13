@@ -40,10 +40,10 @@
 
 	<ItemGroup>
 		<None Include="wwwroot\*" />
-		<None Include="wwwroot\StaticFiles\*" />
 	</ItemGroup>
 	<ItemGroup>
 		<Folder Include="Migrations\" />
+		<Folder Include="wwwroot\StaticFiles\" />
 	</ItemGroup>
 
 	<ItemGroup>
