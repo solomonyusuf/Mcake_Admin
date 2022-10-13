@@ -44,13 +44,16 @@
     public async Task Upload(InputFileChangeEventArgs args)
     {
         var file = args.File;
-        var stream = file.OpenReadStream(20000000);
+        var t = file.ContentType;
+        Path = t;
+        Stream stream = file.OpenReadStream(20000000);
         var path = $"wwwroot\\StaticFiles\\{file.Name}";
         category.ImagePath = path;
         var fs = File.Create(path);
         await stream.CopyToAsync(fs);
-        stream.Close(); fs.Close();
-        Path = $"wwwroot/StaticFiles/{file.Name}";
+        stream.Close(); 
+        fs.Close();
+        Path = path;
 
 
     }
