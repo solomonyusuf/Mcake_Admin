@@ -93,11 +93,7 @@ namespace MCake_Manage
             app.UseHsts();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot", "StaticFiles")),
-                RequestPath = new PathString("/wwwroot/StaticFiles")
-            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
