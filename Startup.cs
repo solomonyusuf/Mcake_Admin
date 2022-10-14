@@ -86,9 +86,21 @@ namespace MCake_Manage
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            var rootFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            var FolderPath = $"{rootFolder}\\StaticFiles";
+            if (!Directory.Exists(FolderPath))
+            {
+                Directory.CreateDirectory(FolderPath);
+            }
+
             SetupDb.SeedData(userManager, roleManager);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
+                RequestPath = new PathString("/StaticFiles")
+            });
             app.UseRouting();
             app.UseHsts();
             app.UseAuthentication();

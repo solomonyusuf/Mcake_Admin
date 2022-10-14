@@ -10,6 +10,7 @@
 		<Content Remove="Pages\CategoryComponent\EditBlog.razor" />
 		<Content Remove="Pages\BlogComponent\AddCategory.razor" />
 		<Content Remove="Pages\BlogComponent\EditCategory.razor" />
+		<Content Remove="wwwroot\client_secret_792834099833-g7s62t566cfa5d19mk5gg4t7eg958fqg.apps.googleusercontent.com.json" />
 	</ItemGroup>
 
 
