@@ -42,9 +42,8 @@
 
 	<ItemGroup>
 		<Folder Include="Migrations\" />
-		<Folder Include="wwwroot\StaticFiles\" />
 		<None Include="wwwroot\*" />
-		<None Include="wwwroot\StaticFiles\*" />
+		
 	</ItemGroup>
 
 	<ItemGroup>
