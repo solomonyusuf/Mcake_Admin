@@ -1,7 +1,8 @@
 ﻿@page "/add/category"
+@using Microsoft.AspNetCore.Hosting
 @inject CategoriesController service
 @inject NavigationManager router
-
+ 
 
 
 
@@ -44,15 +45,13 @@
     public async Task Upload(InputFileChangeEventArgs args)
     {
         var file = args.File;
-        Stream stream = file.OpenReadStream(20000000);
-        var path = $"StaticFiles\\{file.Name}";
+        var stream = file.OpenReadStream(20000000);
+        var path = $"wwwroot\\StaticFiles\\{file.Name}";
         category.ImagePath = path;
         var fs = File.Create(path);
         await stream.CopyToAsync(fs);
-        stream.Close();  
-        fs.Close();
+        stream.Close(); fs.Close();
         Path = path;
-
 
     }
 

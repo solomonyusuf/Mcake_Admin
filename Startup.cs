@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Syncfusion.Blazor;
+using Google.Apis.Drive.v3;
 
 namespace MCake_Manage
 {
@@ -68,6 +69,7 @@ namespace MCake_Manage
             services.AddTransient<RolesController>();
             services.AddTransient<ApplicationUserController>();
 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,7 +93,11 @@ namespace MCake_Manage
             SetupDb.SeedData(userManager, roleManager);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, @"wwwroot", "StaticFiles")),
+                RequestPath = new PathString($"/wwwroot/StaticFiles")
+            });
             app.UseRouting();
             app.UseHsts();
             app.UseAuthentication();
