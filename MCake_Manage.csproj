@@ -878,8 +878,7 @@
 		<None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
 		<None Include="wwwroot\css\open-iconic\README.md" />
 		<None Include="wwwroot\css\site.css" />
-		<Content Include="StaticFiles\">
-			</Content>
+		
 	</ItemGroup>
 
 
