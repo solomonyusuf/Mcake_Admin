@@ -24,8 +24,8 @@
 		<None Include="Pages\BlogComponent\OrderDetail.razor" />
 		<None Include="Pages\ProductsComponent\AddProduct.razor" />
 		<None Include="Pages\ProductsComponent\EditProduct.razor" />
-		<None Include="wwwroot\*" />
-	
+		
+
 	</ItemGroup>
 
 	<ItemGroup>
@@ -41,14 +41,14 @@
 		<PackageReference Include="Syncfusion.Blazor" Version="20.3.0.48" />
 	</ItemGroup>
 
-	
+
 
 	<ItemGroup>
-		
+		<None Include="wwwroot\*" />
 		<Folder Include="Migrations\" />
-		
-		
-		
+
+
+
 	</ItemGroup>
 
 	<ItemGroup>
