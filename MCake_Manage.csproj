@@ -24,7 +24,8 @@
 		<None Include="Pages\BlogComponent\OrderDetail.razor" />
 		<None Include="Pages\ProductsComponent\AddProduct.razor" />
 		<None Include="Pages\ProductsComponent\EditProduct.razor" />
-		
+		<None Include="wwwroot\*" />
+	
 	</ItemGroup>
 
 	<ItemGroup>
@@ -43,9 +44,9 @@
 	
 
 	<ItemGroup>
-		<None Include="wwwroot\*" />
+		
 		<Folder Include="Migrations\" />
-		<Folder Include="wwwroot\StaticFiles\" />
+		
 		
 		
 	</ItemGroup>

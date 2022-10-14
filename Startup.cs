@@ -93,8 +93,8 @@ namespace MCake_Manage
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "StaticFiles")),
-                RequestPath = new PathString("/StaticFiles")
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
+                RequestPath = new PathString("wwwroot/")
             });
             app.UseRouting();
             app.UseHsts();
