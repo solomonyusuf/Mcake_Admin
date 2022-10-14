@@ -38,9 +38,7 @@
 		<PackageReference Include="Syncfusion.Blazor" Version="20.3.0.48" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Include="wwwroot\*" />
-	</ItemGroup>
+	
 
 	<ItemGroup>
 		<Folder Include="Migrations\" />
