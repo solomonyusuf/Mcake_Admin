@@ -45,7 +45,7 @@
     {
         var file = args.File;
         Stream stream = file.OpenReadStream(20000000);
-        var path = $"wwwroot\\{file.Name}";
+        var path = $"{file.Name}";
         category.ImagePath = path;
         var fs = File.Create(path);
         await stream.CopyToAsync(fs);
