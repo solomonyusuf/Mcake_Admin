@@ -91,11 +91,11 @@ namespace MCake_Manage
             SetupDb.SeedData(userManager, roleManager);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            //app.UseStaticFiles(new StaticFileOptions()
-            //{
-            //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot")),
-            //    RequestPath = new PathString("wwwroot/")
-            //});
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+                RequestPath = new PathString("/StaticFiles")
+            });
             app.UseRouting();
             app.UseHsts();
             app.UseAuthentication();
