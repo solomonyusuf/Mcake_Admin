@@ -39,7 +39,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="wwwroot\*" />
+		<None Include="wwwroot\**\*" />
 	</ItemGroup>
 
 	<ItemGroup>
