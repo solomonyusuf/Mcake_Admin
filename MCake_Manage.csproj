@@ -878,8 +878,18 @@
 		<None Include="wwwroot\css\open-iconic\ICON-LICENSE" />
 		<None Include="wwwroot\css\open-iconic\README.md" />
 		<None Include="wwwroot\css\site.css" />
-		
+		<Content Include="StaticFiles\">
+			</Content>
+	</ItemGroup>
 
+
+
+
+	<ItemGroup>
+	  <Compile Remove="bin\**" />
+	  <Content Remove="bin\**" />
+	  <EmbeddedResource Remove="bin\**" />
+	  <None Remove="bin\**" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -898,7 +908,7 @@
 
 
 	<ItemGroup>
-		<Folder Include="StaticFiles\" />
+		
 		<Folder Include="Migrations\" />
 
 
