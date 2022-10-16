@@ -49,7 +49,7 @@ namespace MCake_Manage
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
-            // services.AddEntityFrameworkNpgsql();
+            services.AddEntityFrameworkNpgsql();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
