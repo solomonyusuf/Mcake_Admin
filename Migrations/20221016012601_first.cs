@@ -70,7 +70,8 @@ namespace MCake_Manage.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ImagePath = table.Column<string>(type: "text", nullable: true),
+                    ImagePath = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true),
                     Title = table.Column<string>(type: "text", nullable: true),
                     Body = table.Column<string>(type: "text", nullable: true),
                     Time = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
@@ -100,7 +101,8 @@ namespace MCake_Manage.Migrations
                 columns: table => new
                 {
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ImagePath = table.Column<string>(type: "text", nullable: true),
+                    ImagePath = table.Column<byte[]>(type: "bytea", nullable: true),
+                    Content = table.Column<string>(type: "text", nullable: true),
                     CategoryName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>

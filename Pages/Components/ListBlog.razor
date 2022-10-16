@@ -41,7 +41,7 @@
                             {
 
                                         <tr>
-                                            <td><a href="@item.ImagePath"><img src="@item.ImagePath" style="height:50px;width:50px;border-radius:425px;" /></a>&nbsp;<aside><strong>@item.Title</strong></aside></td>
+                                            <td><img src="data:@(item.Content);base64, @Convert.ToBase64String(@item.ImagePath)" style="height:50px;width:50px;border-radius:425px;" />&nbsp;<aside><strong>@item.Title</strong></aside></td>
                                             <td><i>@item.Body</i></td>
                                             <td><i>@(@item.Time)</i></td>
                                             <td><a class="btn btn-primary" href="/edit/blog/@item.Id"><i class="fa fa-edit"></i></a></td>

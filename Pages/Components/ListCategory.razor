@@ -40,12 +40,12 @@
                             {
 
                                 <tr>
-                                    <td><a href="@item.ImagePath"><img src="@item.ImagePath" style="height:50px;width:50px;border-radius:425px;" /></a>&nbsp;<strong>@item.CategoryName</strong> &nbsp;&nbsp;-&nbsp;@item.Products.Count()&nbsp;products</td>
+                                    <td><img src="data:@(item.Content);base64, @Convert.ToBase64String(@item.ImagePath)" style="height:50px;width:50px;border-radius:425px;" />&nbsp;<strong>@item.CategoryName</strong> &nbsp;&nbsp;-&nbsp;@item.Products.Count()&nbsp;products</td>
                                     <td><a class="btn btn-info" href="/add/product/@item.CategoryId">Add Product</a></td>
                                     <td><a class="btn btn-primary" href="/edit/category/@item.CategoryId"><i class="fa fa-edit"></i></a></td>
                                     <td><button class="btn btn-danger" @onclick="@(async ()=> await Delete(@item.CategoryId))"><i class="fa fa-trash"></i></button></td>
                                 </tr>
-
+                             
                             }
 
                         }

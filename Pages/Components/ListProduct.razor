@@ -42,7 +42,7 @@
                             {
 
                                 <tr>
-                                    <td><a href="@item.Image_1"><img src="@item.Image_1" style="height:50px;width:50px;border-radius:425px;" /></a>&nbsp;@item.ProductName </td>
+                                    <td><img  src="@item.Image_1" style="height:50px;width:50px;border-radius:425px;" />&nbsp;@item.ProductName </td>
                                     <td>$&nbsp;@item.Price</td>
                                     <td>@item.Rating</td>
                                     <td><a class="btn btn-primary" href="/edit/product/@item.ProductId"><i class="fa fa-edit"></i></a></td>
@@ -71,8 +71,9 @@
     protected override async Task OnInitializedAsync()
     {
         await Get();
-        var r = await img.GetImages();
-        images = r.Value.ToList();
+
+       
+       
     }
     public Search search = new();
     public class Search
@@ -121,7 +122,8 @@
         try
         {
             await service.DeleteProduct(id);
-            await Get();
+            var action = new Thread(async ()=> await Get());
+            action.Start();
 
         }
         catch (Exception e)

@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="form-label">Images: Ensure you upload only 3 files</label>
+                            <label class="form-label">Images: Ensure you upload only 3 files less than 50kb</label>
                             <div class="row gutters-sm">
 
                                 @foreach (var item in Path)
@@ -77,8 +77,12 @@
         this.model.Image_1 = Path.First();
         this.model.Image_2 = Path.Last();
         this.model.CategoryId = Guid.Parse(id);
-        var res = await service.PostProduct(model);
-        await Task.Run(() => Post(res.ProductId));
+        var action = new Thread(async ()=>
+        {
+            var res = await service.PostProduct(model);
+             await Post(res.ProductId);
+        });
+        action.Start();      
         router.NavigateTo("/admin/product");
     }
 
@@ -93,15 +97,17 @@
 
     public async Task Upload(InputFileChangeEventArgs args)
     {
-        foreach (var item in args.GetMultipleFiles())
+        foreach (var file in args.GetMultipleFiles())
         {
-            var stream = item.OpenReadStream(20000000);
-            var path = $"wwwroot\\StaticFiles\\{item.Name}";
-            var fs = File.Create(path);
-            await stream.CopyToAsync(fs);
-            stream.Close(); fs.Close();
-            var load = $"/wwwroot/StaticFiles/{item.Name}";
-            Path.Add(load);
+            var stream = file.OpenReadStream(20000000);
+            byte[] buffer;
+            var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            buffer = ms.ToArray();
+            var e = Convert.ToBase64String(buffer);
+            var url = $"data:{file.ContentType};base64, {e}";
+            Path.Add(url);
+            stream.Close();
         }
 
     }

@@ -20,7 +20,7 @@
             {
                 <div class="form-group">
                     <img src="@category.ImagePath" style="height:300px;width:300px;" type="text" class="form-control" />
-                 </div>               
+                </div>
             }
             <div class="form-group">
                 <InputFile OnChange="Upload" type="file" class="form-control" />
@@ -28,7 +28,7 @@
             <div class="form-group">
                 <InputText @bind-Value="@category.CategoryName" placeholder="Enter Category Name" type="text" class="form-control" />
             </div>
-            <div class="form-group"align="center">
+            <div class="form-group" align="center">
                 <button type="submit" class="btn btn-primary w-50">Submit</button>
             </div>
         </div>
@@ -40,12 +40,14 @@
     [Parameter]
     public string id { get; set; }
     public Category category = new();
-    public string? Path;
+    public string Path;
 
     protected override async Task OnInitializedAsync()
     {
         var res = await service.GetCategory(Guid.Parse(id));
         this.category = res;
+        var e = Convert.ToBase64String(res.ImagePath);
+        Path = $"data:{res.Content};base64, {e}";
     }
 
 
@@ -55,17 +57,20 @@
         router.NavigateTo("/admin/category");
     }
 
-    public async Task Upload(InputFileChangeEventArgs args)
+   public async Task Upload(InputFileChangeEventArgs args)
     {
         var file = args.File;
         var stream = file.OpenReadStream(20000000);
-        var path = $"wwwroot\\StaticFiles\\{file.Name}";
-        category.ImagePath = path;
-        var fs = File.Create(path);
-        await stream.CopyToAsync(fs);
-        stream.Close(); fs.Close();
-        Path = $"/wwwroot/StaticFiles/{file.Name}";
-
+        byte[] buffer;
+        var ms = new MemoryStream();
+        await stream.CopyToAsync(ms);
+        buffer = ms.ToArray();
+        category.ImagePath = buffer;
+        category.Content = file.ContentType;
+        var e = Convert.ToBase64String(buffer);
+        Path = $"data:{file.ContentType};base64, {e}";
+        stream.Close();
+      
 
     }
 

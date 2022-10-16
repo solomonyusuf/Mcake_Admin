@@ -49,7 +49,7 @@ namespace MCake_Manage
                 .AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
-            services.AddEntityFrameworkNpgsql();
+            // services.AddEntityFrameworkNpgsql();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -93,11 +93,7 @@ namespace MCake_Manage
             SetupDb.SeedData(userManager, roleManager);
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, @"wwwroot", "StaticFiles")),
-                RequestPath = new PathString($"/wwwroot/StaticFiles")
-            });
+
             app.UseRouting();
             app.UseHsts();
             app.UseAuthentication();

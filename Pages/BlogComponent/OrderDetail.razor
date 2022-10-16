@@ -4,65 +4,67 @@
 
 
 <div class=" card shadow col-xs-12 col-sm-12 col-md-12 col-lg-12">
-<h5 align="center">Update Order Status</h5>
-<EditForm Model="@order" class="form-group" OnSubmit="@Edit">
- <InputSelect @bind-Value="order.Status" type="text" class="form-control">
-    @foreach (var item in Options)
-    {
-        <option value="@item">@item</option>
-    }
-</InputSelect>
-<button style="margin:3px;" class="btn btn-primary w-25" type="submit">Submit</button>
-</EditForm>
+    <h5 align="center">Update Order Status</h5>
+    <EditForm Model="@order" class="form-group" OnSubmit="@Edit">
+        <InputSelect @bind-Value="order.Status" type="text" class="form-control">
+            @foreach (var item in Options)
+            {
+                <option value="@item">@item</option>
+            }
+        </InputSelect>
+        <button style="margin:3px;" class="btn btn-primary w-25" type="submit">Submit</button>
+    </EditForm>
 </div>
 
 <div class="card col-xs-12 col-sm-12 col-md-12 col-lg-12">
-<div class="card-body">
-     <h5 align="center">Order Detail</h5>
-<div class="boxs mail_listing">
-<div class="inbox-center table-responsive">
-    <table class="table table-hover">
-    <thead>
-        <tr>
-        <th>Product</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Shipping Price</th>
-        <th>Total Price</th>
-        <th>Status</th>
-        <th></th>
-        <th></th>
-        <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (list != null)
-        {
-            @foreach (var item in list)
-            {
-                    <tr class="unread">
-                    <td><a href="@item.Image_1"><img src="@item.Image_1" style="height:50px;width:50px;border-radius:425px;" /></a>&nbsp;@item.ProductName</td>
-                    <td>@item.Quantity</td>
-                    <td>$&nbsp;@item.Price</td>
-                    <td>$&nbsp;@item.ShippingPrice</td>
-                    <td>$&nbsp;@(int.Parse(item.Price) + int.Parse(item.ShippingPrice))</td>
-                    <td>@item.Status</td>
-                    <td><div class="input-group-btn">
-                        <button class="form-control btn btn-warning" @onclick="@(()=> Update(item))"><i class="fa fa-refresh"></i></button>
-                    </div></td>
-                </tr>
-            }
-        }
-        @if (@list.Count() == 0)
-        {
+    <div class="card-body">
+        <h5 align="center">Order Detail</h5>
+        <div class="boxs mail_listing">
+            <div class="inbox-center table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Shipping Price</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (list != null)
+                        {
+                            @foreach (var item in list)
+                            {
+                                <tr class="unread">
+                                    <td><img src="@item.Image_1" style="height:50px;width:50px;border-radius:425px;" />&nbsp;@item.ProductName</td>
+                                    <td>@item.Quantity</td>
+                                    <td>$&nbsp;@item.Price</td>
+                                    <td>$&nbsp;@item.ShippingPrice</td>
+                                    <td>$&nbsp;@(int.Parse(item.Price) + int.Parse(item.ShippingPrice))</td>
+                                    <td>@item.Status</td>
+                                    <td>
+                                        <div class="input-group-btn">
+                                            <button class="form-control btn btn-warning" @onclick="@(()=> Update(item))"><i class="fa fa-refresh"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        @if (@list.Count() == 0)
+                        {
 
-    <tr><td><i>No data available</i></td></tr>
-        }
-    </tbody>
-    </table>
-</div>
-</div>
-</div>
+                            <tr><td><i>No data available</i></td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 @code {
     [Parameter]
@@ -117,14 +119,14 @@
                 _db.Initials.Update(i);
                 await _db.SaveChangesAsync();
             }
-            else if(i.Status.Equals("Not Delivered"))
+            else if (i.Status.Equals("Not Delivered"))
             {
                 i.Status = "Delivered";
                 _db.Initials.Update(i);
                 await _db.SaveChangesAsync();
             }
 
-            
+
             await refresh();
 
         }

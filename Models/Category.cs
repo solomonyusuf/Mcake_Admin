@@ -8,7 +8,8 @@ namespace MCake_Manage.Models
     {
         [Key]
         public virtual Guid CategoryId { get; set; }
-        public virtual string ImagePath { get; set; }
+        public virtual byte[] ImagePath { get; set; }
+        public virtual string Content { get; set; }
         public virtual string CategoryName { get; set; }
         public virtual Collection<Product> Products { get; set; }
         public Category()

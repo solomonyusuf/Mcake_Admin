@@ -50,8 +50,11 @@ namespace MCake_Manage.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("text");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("Content")
                         .HasColumnType("text");
+
+                    b.Property<byte[]>("ImagePath")
+                        .HasColumnType("bytea");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp without time zone");
@@ -96,8 +99,11 @@ namespace MCake_Manage.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("text");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("Content")
                         .HasColumnType("text");
+
+                    b.Property<byte[]>("ImagePath")
+                        .HasColumnType("bytea");
 
                     b.HasKey("CategoryId");
 

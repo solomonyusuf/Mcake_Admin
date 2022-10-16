@@ -903,13 +903,12 @@
 		<PackageReference Include="Syncfusion.Blazor" Version="20.3.0.48" />
 	</ItemGroup>
 
-
-
+	
 	<ItemGroup>
 		
 		<Folder Include="Migrations\" />
 		
-		<Folder Include="wwwroot\StaticFiles\" />
+		
 
 
 

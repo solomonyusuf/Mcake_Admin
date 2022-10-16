@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MCake_Manage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221010090449_first")]
+    [Migration("20221016012601_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -52,8 +52,11 @@ namespace MCake_Manage.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("text");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("Content")
                         .HasColumnType("text");
+
+                    b.Property<byte[]>("ImagePath")
+                        .HasColumnType("bytea");
 
                     b.Property<DateTime>("Time")
                         .HasColumnType("timestamp without time zone");
@@ -98,8 +101,11 @@ namespace MCake_Manage.Migrations
                     b.Property<string>("CategoryName")
                         .HasColumnType("text");
 
-                    b.Property<string>("ImagePath")
+                    b.Property<string>("Content")
                         .HasColumnType("text");
+
+                    b.Property<byte[]>("ImagePath")
+                        .HasColumnType("bytea");
 
                     b.HasKey("CategoryId");
 

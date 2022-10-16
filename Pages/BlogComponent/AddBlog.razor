@@ -48,13 +48,16 @@
     {
         var file = args.File;
         var stream = file.OpenReadStream(20000000);
-        var path = $"wwwroot\\StaticFiles\\{file.Name}";
-        model.ImagePath = path;
-        var fs = File.Create(path);
-        await stream.CopyToAsync(fs);
-        stream.Close(); fs.Close();
-        Path = $"/wwwroot/StaticFiles/{file.Name}";
-
+        byte[] buffer;
+        var ms = new MemoryStream();
+        await stream.CopyToAsync(ms);
+        buffer = ms.ToArray();
+        model.ImagePath = buffer;
+        model.Content = file.ContentType;
+        var e = Convert.ToBase64String(buffer);
+        Path = $"data:{file.ContentType};base64, {e}";
+        stream.Close();
+      
 
     }
 

@@ -1,8 +1,10 @@
 ﻿@page "/edit/product/{id}"
+@using MCake_Manage.Data
+@using Microsoft.EntityFrameworkCore
 @inject ProductsController service
 @inject ImagesController _img
 @inject NavigationManager router
-
+@inject ApplicationDbContext _db
 
 
 <div class="col-12 col-md-6 col-lg-6">
@@ -19,7 +21,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label class="form-label">Images: Ensure you upload only 3 files</label>
+                            <label class="form-label">Images: Ensure you upload only 3 files less than 50kb</label>
                             <div class="row gutters-sm">
 
                                 @foreach (var item in list)
@@ -75,18 +77,24 @@
     protected override async Task OnInitializedAsync()
     {
         var res = await service.GetProduct(Guid.Parse(id));
-        var b = await _img.GetImages();
-        images = b.Value. Where(s => id.Contains( s.ProductId.ToString())).ToList();
-        list = images.Select(s => s.ImagePath).ToList();
         model = res;
+        list = await _db.Images.Where(s => id.Contains(s.ProductId.ToString())).Select(s => s.ImagePath).ToListAsync();
+            
     }
+
+   
 
     public async Task Add()
     {
         this.model.Image_1 = list.First();
         this.model.Image_2 = list.Last();
-        var res = await service.PutProduct(Guid.Parse(id),model);
-        await Task.Run(()=> Post(Guid.Parse(id)));    
+        var action = new Thread(async ()=>
+        {
+            var res = await service.PutProduct(Guid.Parse(id),model);
+            await Post(Guid.Parse(id)); 
+        });
+        action.Start();
+           
         router.NavigateTo("/admin/product");
     }
 
@@ -105,23 +113,25 @@
     { 
         foreach (var item in list)
         {
-           var data = new Image {ProductId = id,ImagePath = item };
-           await _img.PostImage(data);
+            var data = new Image {ProductId = id,ImagePath = item };
+            await _img.PostImage(data);
         }
     }
 
     public async Task Upload(InputFileChangeEventArgs args)
     {
-         list.Clear();
-        foreach (var item in args.GetMultipleFiles())
+        list.Clear();
+        foreach (var file in args.GetMultipleFiles())
         {
-            var stream = item.OpenReadStream(20000000);
-            var path = $"wwwroot\\StaticFiles\\{item.Name}";
-            var fs = File.Create(path);
-            await stream.CopyToAsync(fs);
-            stream.Close(); fs.Close();
-            var load = $"/wwwroot/StaticFiles/{item.Name}";
-            list.Add(load);
+            var stream = file.OpenReadStream(20000000);
+            byte[] buffer;
+            var ms = new MemoryStream();
+            await stream.CopyToAsync(ms);
+            buffer = ms.ToArray();
+            var e = Convert.ToBase64String(buffer);
+            var url = $"data:{file.ContentType};base64, {e}";
+            list.Add(url);
+            stream.Close();
         }
 
     }
