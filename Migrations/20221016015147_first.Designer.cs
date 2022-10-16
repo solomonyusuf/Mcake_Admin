@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MCake_Manage.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221016012601_first")]
+    [Migration("20221016015147_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
